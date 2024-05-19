@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app-deployment
+  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-app
+  template:
+    metadata:
+      labels:
+        app: django-app
+    spec:
+      containers:
+      - name: django-app
+        image: santosh567/webapp:11
+        volumeMounts:
+          - name: myvol
+            mountPath: /app/file.txt
+      volumes:
+        - name: myvol
+          hostPath:
+            path: /mydata/file.txt
+            type: FileOrCreate
+      
+---     
+        
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-app-service
+spec:
+  selector:
+    app: django-app
+  ports:
+    - name: http
+      port: 8002
+      targetPort: 3000
+  type: LoadBalancer
