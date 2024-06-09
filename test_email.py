@@ -55,3 +55,4 @@ def send_emails():
 
 # Call the function to send emails
 send_emails()
+print("hello")
