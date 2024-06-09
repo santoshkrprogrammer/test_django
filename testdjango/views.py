@@ -16,3 +16,4 @@ def home(request):
     f.close()
     return HttpResponse(data)
 
+print("hello")
